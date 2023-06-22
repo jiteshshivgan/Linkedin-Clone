@@ -47,6 +47,23 @@ function Header(props){
                             </a>
                             
                         </NavList>
+                        <User>
+                            <a>
+                                <img src="/images/user.svg" alt="user"/>
+                                <span>Me <img src="/images/down-icon.svg"/></span>
+                                
+                            </a>
+                            <SignOut><a>Sign Out</a></SignOut>
+                        </User>
+                        <Work>
+                            <a>
+                                <img src="/images/nav-work.svg" alt=""/>
+                            <span>
+                                Work
+                                <img src="/images/down-icon.svg" alt=""/>
+                            </span>
+                            </a>
+                        </Work>
                     </NavListWrap>
                 </Nav>
             </Content>
@@ -135,13 +152,16 @@ const NavListWrap=styled.ul`
     list-style: none;
 
     .active{
-        span:after{
-            content: '';
+        & span:after{
+            content: "";
             transform: scaleX(1);
-            border-bottom: 2px solid var()(--whitem #fff);
+            border-bottom: 2px solid black;
             bottom:0;
             left:0;
             position: absolute;
+            transition: transform .2s ease-in-out;
+            width: 100%;
+            border-color: rgba(0,0,0,0.9);
         }
     }
 `;
@@ -163,7 +183,7 @@ const NavList=styled.li`
         text-decoration: none;
         span{
             color: rgba(0,0,0,0.6);
-            text-decoration: underline;
+            /* text-decoration: underline; */
             display: flex;
             align-items: center;
         }
@@ -181,4 +201,50 @@ const NavList=styled.li`
     }
 
 `;
+
+
+const SignOut=styled.div`
+    position: absolute;
+    top: 45px;
+    background: white;
+    border-radius: 0 0 5px 5px;
+    height: 40px;
+    width: 100px;
+    font-size: 16px;
+    transition-duration: 167ms;
+    text-align: center;
+    display: none;
+
+    padding: 0px 20px;
+    border: 1px solid black;
+    border-color: rgba(0,0,0,0.08);
+`;
+
+const User = styled(NavList)`
+    a > img{
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+    }
+
+    span{
+        display: flex;
+        align-items: center;
+    }
+
+    &:hover{
+        ${SignOut}{
+            align-items: center;
+            display: flex;
+            justify-content: center;
+        }
+    }
+`;
+const Work=styled(User)`
+    border-left: 1px solid rgba(0,0,0,0.08);
+
+
+`;
+
+
 export default Header;
