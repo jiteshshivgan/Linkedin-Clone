@@ -1,7 +1,8 @@
 import styled from 'styled-components'
+import {connect} from 'react-redux';
+import {signInAPI} from "../actions";
 
-
-function Login(props){
+const Login= (props)=>{
     return (
         <Container>
             <Nav>
@@ -19,7 +20,7 @@ function Login(props){
                     <img src="/images/login-hero.svg" alt=""/>
                 </Hero>
                 <Form>
-                    <Google><img src="/images/google.svg"/>Sign in with Google</Google>
+                    <Google onClick={()=>props.signIn()}><img src="/images/google.svg"/>Sign in with Google</Google>
                 </Form>
             </Section>
         </Container>
@@ -163,4 +164,15 @@ const Google=styled.button`
         justify-content: center;
     }
 `;
-export default Login;
+
+const mapStateToProps=(state)=>{
+    return {};
+}
+
+const mapDispatchToProps=(dispatch)=>({
+    signIn: ()=> dispatch(signInAPI()), 
+});
+
+;
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
+
