@@ -1,8 +1,23 @@
 import styled from "styled-components";
 import { useState } from "react";
+import ReactPlayer from "react-player";
 
 function PostModal(props) {
   const [editorText, setEditorText] = useState("");
+  const [shareImage, setShareImage] = useState("");
+  const [videoLink, setVideoLink] = useState("");
+
+
+  const handleChange=(e)=>{
+    const image=e.target.files[0];
+
+    if(image === ' ' || image === undefined){
+      alert(`not an image, the file is a ${typeof(image)}`);
+      return;
+    }
+
+    setShareImage(image);
+  };
 
   const reset = (e) => {
     setEditorText("");
@@ -11,7 +26,7 @@ function PostModal(props) {
 
   return (
     <>
-    { props.showModal==="open" &&
+    { props.showModal==="open" && (
     <Container>
       <Content>
         <Header>
@@ -31,7 +46,14 @@ function PostModal(props) {
               onChange={(e) => setEditorText(e.target.value)}
               placeholder="What do you want to talk about?"
               autoFocus={true}
-            ></textarea>
+            />
+            <UploadImage>
+              <input type="file" accept="image/gif, image/jpeg, image/png" name="image" id="file" style={{
+                display: "none"
+              }} onChange={handleChange}/>
+              <p><label htmlFor="file">Select an image to share</label></p>
+              {shareImage && <img src={URL.createObjectURL(shareImage)}/>}
+            </UploadImage>
           </Editor>
         </SharedContent>
         <ShareCreation>
@@ -54,10 +76,11 @@ function PostModal(props) {
           <AssetButton>
             <img src="/images/schedule-icon.png"></img>
           </AssetButton>
-          <AssetButton>Post</AssetButton>
+          <AssetButton disabled={!editorText?true:false}>Post</AssetButton>
         </PostButton>
       </Content>
     </Container>
+    )
 }
     </>
   );
@@ -72,6 +95,7 @@ const Container = styled.div`
   z-index: 999;
   color: black;
   background-color: rgba(0, 0, 0, 0.8);
+  animation: fadeIn 0.3s;
 `;
 
 const Content = styled.div`
@@ -188,6 +212,15 @@ const PostButton = styled.div`
     font-size: 15px;
     font-weight: 600;
     color: rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(0,0,0,0.8);
+    cursor: pointer;
+    outline: none;
+    /* background: ${(props) => (props.disabled?"rgba(0,0,0,0.8":"#0a66c2")}; */
+    &:hover{
+      background: rgba(0,0,0,1);
+      color: white;
+    }
+
     &:first-child {
       border-radius: 50%;
       width: 40px;
@@ -198,6 +231,7 @@ const PostButton = styled.div`
       padding: 1px;
       box-sizing: content-box;
       background-color: transparent;
+      border: none;
       img {
         width: 20px;
       }
@@ -209,7 +243,6 @@ const PostButton = styled.div`
 `;
 
 const Editor = styled.div`
-  display: flex;
   padding: 12px 24px;
   textarea {
     width: 100%;
@@ -223,5 +256,13 @@ const Editor = styled.div`
     font-size: 16px;
     margin-bottom: 20px;
   }
+`;
+
+const UploadImage=styled.div`
+  text-align: center;
+  img{
+    width: 100%;
+  }
+
 `;
 export default PostModal;
