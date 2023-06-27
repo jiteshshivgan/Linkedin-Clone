@@ -31,7 +31,7 @@ function Main(props) {
       <ShareBox>
         <div>
           <img src="/images/user.svg" />
-          <button>Start a post</button>
+          <button onClick={handleClick}>Start a post</button>
         </div>
         <div>
           <button>
@@ -106,7 +106,7 @@ function Main(props) {
           </SocialActions>
         </Article>
       </div>
-      <PostModal/>
+      <PostModal showModal={showModal} handleClick={handleClick}/>
     </Container>
   );
 }
