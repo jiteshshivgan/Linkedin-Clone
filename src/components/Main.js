@@ -1,7 +1,31 @@
 import styled from "styled-components";
-// import PostModal from "./PostModal";
+import PostModal from "./PostModal";
+import {useState} from "react";
 
 function Main(props) {
+
+  const [showModal, setShowModal]=useState("close");
+  
+  const handleClick=(e)=>{
+    e.preventDefault();
+
+    if(e.target!==e.currentTarget){
+      return;
+    }
+
+    switch (showModal){
+      case "open":
+        setShowModal("close");
+        break;
+      case "close":
+        setShowModal("open");
+        break;
+      default:
+        setShowModal("close");
+        break;
+    }
+  };
+
   return (
     <Container>
       <ShareBox>
@@ -82,6 +106,7 @@ function Main(props) {
           </SocialActions>
         </Article>
       </div>
+      <PostModal/>
     </Container>
   );
 }
