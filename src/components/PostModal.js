@@ -6,7 +6,7 @@ function PostModal(props) {
   const [editorText, setEditorText] = useState("");
   const [shareImage, setShareImage] = useState("");
   const [videoLink, setVideoLink] = useState("");
-
+  const [assetArea, setAssetArea] = useState("");
 
   const handleChange=(e)=>{
     const image=e.target.files[0];
@@ -17,6 +17,12 @@ function PostModal(props) {
     }
 
     setShareImage(image);
+  };
+
+  const switchAssetArea = (area) => {
+    setShareImage("");
+    setVideoLink("");
+    setAssetArea(area);
   };
 
   const reset = (e) => {
@@ -53,6 +59,11 @@ function PostModal(props) {
               }} onChange={handleChange}/>
               <p><label htmlFor="file">Select an image to share</label></p>
               {shareImage && <img src={URL.createObjectURL(shareImage)}/>}
+              <>
+                <input type="text" placeholder="Please input a video link" value={videoLink} onChange={(e)=> setVideoLink(e.target.value)}/>
+                {videoLink && (<ReactPlayer width={"100%"} url={videoLink}/>)}
+              </>
+              
             </UploadImage>
           </Editor>
         </SharedContent>
